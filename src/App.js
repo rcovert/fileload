@@ -82,7 +82,6 @@ const App = () => {
         console.log("test j: ", j.messageId);
         setResp(j.messageId);
         navigate("/results", { state: { msgid: j.messageId } });
-        
       })
       .catch((e) => console.log("test e", e))
       .catch((e) => console.log("test e2", e));
