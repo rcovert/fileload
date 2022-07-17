@@ -25,24 +25,6 @@ exports.handler = async (event) => {
   console.log("namecontrol:  ", namecontrol);
   console.log("taxperiod:  ", taxperiod);
 
-  //let transporter = nodemailer.createTransport({
-  //  SES: new aws.SES({ region: "us-east-2", apiVersion: "2010-12-01" }),
-  //});
-
-  //let emailProps = await transporter.sendMail({
-  //  from: senderName,
-  //  to: senderEmail,
-  //  subject: date,
-  //  text: message,
-  //  html: "<div>" + message + "</div>",
-  //  attachments: [
-  //    {
-  //      filename: "TEST_FILE_NAME.pdf",
-  //      content: base64RemoveDataURI,
-  //      encoding: "base64",
-  //    },
-  //  ],
-  //});
 
   // now post to S3
   var s3 = new aws.S3();
@@ -76,8 +58,7 @@ exports.handler = async (event) => {
     Item: {
       ssn: { S: ssn },
       fileurl: {
-        S: "https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com/" + fileName,
-      },
+        S: "https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com/" + fileName},
       namecontrol: { S: namecontrol },
       taxperiod: { S: taxperiod },
     },
