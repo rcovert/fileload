@@ -27,6 +27,9 @@ exports.handler = async (event) => {
 
 
   // now post to S3
+  // note use of await promise on both s3 and ddb entries
+  // also must add policies to lambda role to use S3 and DDB
+  // also S3 access point created to point to s3 bucket
   var s3 = new aws.S3();
 
   let buff = Buffer.from(base64RemoveDataURI, "base64");
