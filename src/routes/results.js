@@ -5,11 +5,12 @@ import {
 
 export default function Results() {
   const location = useLocation();
-  const filelocation = 'https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com'+location.state.msgid;
+  const filelocation = 'https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com/'+location.state.msgid;
 
   return (
     <main style={{ padding: "1rem 0" }}>
       <h2>Results - file location - {filelocation}</h2>
+      <a href={filelocation}>FILE</a>
       <br></br>
       <br></br>
       <Link to="/">Back Home</Link>
