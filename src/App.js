@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
+import { nanoid } from "nanoid";
 
 import {
   Link,
@@ -19,6 +20,10 @@ const App = () => {
   let location = useLocation();
   let params = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
+
+  // generate unique file-id
+  const fileid = nanoid() + ".pdf";
+  //console.log('fileid: ', fileid);
 
   const onChange = (e) => {
     const files = e.target.files;
@@ -73,15 +78,15 @@ const App = () => {
           message: "HELLO WORLD THIS IS FROM REACT APP",
           base64Data: base64,
           date: new Date(),
-          fileName: "TEST_FILE_NAME",
+          fileName: fileid,
         }),
       }
     )
       .then((response) => response.json())
       .then((j) => {
-        console.log("test j: ", j.messageId);
-        setResp(j.messageId);
-        navigate("/results", { state: { msgid: j.messageId } });
+        console.log("test j: ", j);
+        //setResp(j.messageId);
+        navigate("/results", { state: { msgid: fileid } });
       })
       .catch((e) => console.log("test e", e))
       .catch((e) => console.log("test e2", e));
@@ -90,7 +95,7 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     doFetch();
-    console.log("res: ", theResponse);
+    //console.log("res: ", theResponse);
   };
 
   return (
@@ -129,9 +134,7 @@ const App = () => {
             borderBottom: "solid 1px",
             paddingBottom: "1rem",
           }}
-        >
-          <Link to="/results">Results</Link>
-        </nav>
+        ></nav>
       </form>
     </div>
   );

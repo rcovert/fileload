@@ -10,7 +10,7 @@ export default function Results() {
       <h2>Results - msg id - {location.state.msgid}</h2>
       <br></br>
       <br></br>
-      <Link to="/">Home</Link>
+      <Link to="/">Back Home</Link>
     </main>
   );
 }
