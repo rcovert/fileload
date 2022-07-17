@@ -46,8 +46,9 @@ const App = () => {
 
   const onLoad = (fileString) => {
     setBase64(fileString);
-    console.log(base64);
+    //console.log(base64);
   };
+
 
   const getBase64 = (file) => {
     let reader = new FileReader();
