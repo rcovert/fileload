@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 import { useNavigate } from "react-router-dom";
@@ -18,12 +18,17 @@ const App = () => {
   // generate other random values
 
   const tempssn = new RandExp(/([0-9]{9})/).gen();
-  setSSN(tempssn);
+
   const temptp = new RandExp(/([0-9]{4})/).gen();
-  setTY(temptp);
+
   const tempnc = new RandExp(/([A-Z]{4})/).gen();
-  setNC(tempnc);
-  
+
+  useEffect(() => {
+    setSSN(tempssn);
+    setTY(temptp);
+    setNC(tempnc);
+  }, []);
+
   function onChange(e) {
     const files = e.target.files;
     const file = files[0];
@@ -84,9 +89,6 @@ const App = () => {
     )
       .then((response) => response.text())
       .then((data) => {
-        //console.log("data is: ", data);
-        //setResp(data);
-        //console.log("the response is: ", theResponse);
         navigate("/results", { state: { msgid: data } });
       })
       .catch((e) => console.log("test e", e))
@@ -103,7 +105,13 @@ const App = () => {
       <form>
         <label>SSN:</label>
         <br></br>
-        <input type="text" id="SSN" name="SSN" defaultValue={tempssn} onChange={onChangeS}></input>
+        <input
+          type="text"
+          id="SSN"
+          name="SSN"
+          defaultValue={tempssn}
+          onChange={onChangeS}
+        ></input>
         <br></br>
         <label>Tax Period (MM/YYYY):</label>
         <br></br>
