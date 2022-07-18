@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import * as RandExp from "randexp";
 
