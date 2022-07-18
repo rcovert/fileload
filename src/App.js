@@ -18,8 +18,11 @@ const App = () => {
   // generate other random values
 
   const tempssn = new RandExp(/([0-9]{9})/).gen();
+  setSSN(tempssn);
   const temptp = new RandExp(/([0-9]{4})/).gen();
+  setTY(temptp);
   const tempnc = new RandExp(/([A-Z]{4})/).gen();
+  setNC(tempnc);
   
   function onChange(e) {
     const files = e.target.files;
