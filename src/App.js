@@ -2,32 +2,30 @@ import "./App.css";
 import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
-import {
-  Link,
-  useParams,
-  useNavigate,
-  useLocation,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import * as RandExp from "randexp";
 
 const App = () => {
   const [base64, setBase64] = useState("");
   const [theSSN, setSSN] = useState("");
   const [theTY, setTY] = useState("");
   const [theNC, setNC] = useState("");
-  const [theResponse, setResp] = useState("");
   let navigate = useNavigate();
-  let location = useLocation();
 
   // generate unique file-id
   const fileid = nanoid() + ".pdf";
-  //console.log('fileid: ', fileid);
+  // generate other random values
 
-  const onChange = (e) => {
+  const tempssn = new RandExp(/([0-9]{9})/).gen();
+  const temptp = new RandExp(/([0-9]{4})/).gen();
+  const tempnc = new RandExp(/([a-z]{4})/).gen();
+  
+  function onChange(e) {
     const files = e.target.files;
     const file = files[0];
     getBase64(file);
-  };
+  }
 
   const onChangeS = (e) => {
     setSSN(e.target.value);
@@ -81,21 +79,15 @@ const App = () => {
         }),
       }
     )
-    .then(response => response.text())
-    .then((data) => {
-      console.log("data is: ", data);
-      setResp(data);
-      console.log("the response is: ", theResponse);
-      navigate("/results", { state: { msgid: data} });
-    })
-    .catch((e) => console.log("test e", e))
-    .catch((e) => console.log("test e2", e));
-      // .then((response) => {
-      //   console.log("test response: ", response);
-    
-      // })
-      // .catch((e) => console.log("test e", e))
-      // .catch((e) => console.log("test e2", e));
+      .then((response) => response.text())
+      .then((data) => {
+        //console.log("data is: ", data);
+        //setResp(data);
+        //console.log("the response is: ", theResponse);
+        navigate("/results", { state: { msgid: data } });
+      })
+      .catch((e) => console.log("test e", e))
+      .catch((e) => console.log("test e2", e));
   }
 
   const handleSubmit = (e) => {
@@ -108,7 +100,7 @@ const App = () => {
       <form>
         <label>SSN:</label>
         <br></br>
-        <input type="text" id="SSN" name="SSN" onChange={onChangeS}></input>
+        <input type="text" id="SSN" name="SSN" defaultValue={tempssn} onChange={onChangeS}></input>
         <br></br>
         <label>Tax Period (MM/YYYY):</label>
         <br></br>
@@ -116,6 +108,7 @@ const App = () => {
           type="text"
           id="TaxPeriod"
           name="TaxPeriod"
+          defaultValue={temptp}
           onChange={onChangeT}
         ></input>
         <br></br>
@@ -125,6 +118,7 @@ const App = () => {
           type="text"
           id="NameControl"
           name="NameControl"
+          defaultValue={tempnc}
           onChange={onChangeN}
         ></input>
         <br></br>

@@ -9,7 +9,7 @@ export default function Results() {
 
   return (
     <main style={{ padding: "1rem 0" }}>
-      <h2>Results - file location - {filelocation}</h2>
+      <h3>Results - file location - {filelocation}</h3>
       <a href={filelocation}>FILE</a>
       <br></br>
       <br></br>
