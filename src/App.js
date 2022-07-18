@@ -18,8 +18,6 @@ const App = () => {
   const [theResponse, setResp] = useState("");
   let navigate = useNavigate();
   let location = useLocation();
-  let params = useParams();
-  let [searchParams, setSearchParams] = useSearchParams();
 
   // generate unique file-id
   const fileid = nanoid() + ".pdf";
@@ -49,7 +47,6 @@ const App = () => {
     //console.log(base64);
   };
 
-
   const getBase64 = (file) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -69,6 +66,7 @@ const App = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Custom-Header1": "xxxyyy",
         },
         body: JSON.stringify({
           senderName: "randycovert@gmail.com",
@@ -83,20 +81,24 @@ const App = () => {
         }),
       }
     )
-      .then((response) => response.json())
-      .then((j) => {
-        console.log("test j: ", j);
-        //setResp(j.messageId);
-        navigate("/results", { state: { msgid: fileid } });
-      })
-      .catch((e) => console.log("test e", e))
-      .catch((e) => console.log("test e2", e));
+    .then(response => response.text())
+    .then((data) => {
+      console.log(data);
+      setResp(data);
+    })
+    .catch((e) => console.log("test e", e))
+    .catch((e) => console.log("test e2", e));
+      // .then((response) => {
+      //   console.log("test response: ", response);
+      navigate("/results", { state: { msgid: theResponse} });
+      // })
+      // .catch((e) => console.log("test e", e))
+      // .catch((e) => console.log("test e2", e));
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     doFetch();
-    //console.log("res: ", theResponse);
   };
 
   return (

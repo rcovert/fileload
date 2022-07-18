@@ -31,7 +31,6 @@ exports.handler = async (event) => {
     Key: fileName,
     Body: buff,
   };
-  let returnval = "";
   console.log("s3");
   try {
     console.log("enter s3 create");
