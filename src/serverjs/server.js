@@ -1,19 +1,13 @@
 const aws = require("aws-sdk");
-const nodemailer = require("nodemailer");
-var s3 = new aws.S3();
 aws.config.update({ region: "us-east-2" });
 
 exports.handler = async (event) => {
   const {
-    senderEmail,
-    senderName,
-    message,
     ssn,
     fileName,
     namecontrol,
     taxperiod,
-    base64Data,
-    date,
+    base64Data
   } = JSON.parse(event.body);
 
   const base64RemoveDataURI = base64Data.replace(
@@ -24,7 +18,6 @@ exports.handler = async (event) => {
   console.log("fileName:  ", fileName);
   console.log("namecontrol:  ", namecontrol);
   console.log("taxperiod:  ", taxperiod);
-
 
   // now post to S3
   // note use of await promise on both s3 and ddb entries
@@ -42,8 +35,7 @@ exports.handler = async (event) => {
   console.log("s3");
   try {
     console.log("enter s3 create");
-    const data = await s3.putObject(params).promise();
-    returnval = data;
+    await s3.putObject(params).promise();
     console.log("Successfully saved object to S3");
   } catch (err) {
     console.log("error: ", err);
@@ -61,7 +53,8 @@ exports.handler = async (event) => {
     Item: {
       ssn: { S: ssn },
       fileurl: {
-        S: "https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com/" + fileName},
+        S: "https://my-test-bucket-rjc.s3.us-east-2.amazonaws.com/" + fileName,
+      },
       namecontrol: { S: namecontrol },
       taxperiod: { S: taxperiod },
     },
@@ -76,6 +69,11 @@ exports.handler = async (event) => {
 
   console.log("ddb done");
 
-  //return emailProps;
-  return returnval;
+  //now get pre-signed url for object
+  var paramx = { Bucket: "arn:aws:s3:us-east-2:076667109423:accesspoint/rjctest", Key: fileName };
+  var url = s3.getSignedUrl("getObject", paramx);
+  console.log("The URL is", url);
+
+  //return url
+  return url;
 };
