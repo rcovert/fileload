@@ -83,14 +83,16 @@ const App = () => {
     )
     .then(response => response.text())
     .then((data) => {
-      console.log(data);
+      console.log("data is: ", data);
       setResp(data);
+      console.log("the response is: ", theResponse);
+      navigate("/results", { state: { msgid: data} });
     })
     .catch((e) => console.log("test e", e))
     .catch((e) => console.log("test e2", e));
       // .then((response) => {
       //   console.log("test response: ", response);
-      navigate("/results", { state: { msgid: theResponse} });
+    
       // })
       // .catch((e) => console.log("test e", e))
       // .catch((e) => console.log("test e2", e));
