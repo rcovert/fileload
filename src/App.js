@@ -19,7 +19,7 @@ const App = () => {
 
   const tempssn = new RandExp(/([0-9]{9})/).gen();
   const temptp = new RandExp(/([0-9]{4})/).gen();
-  const tempnc = new RandExp(/([a-z]{4})/).gen();
+  const tempnc = new RandExp(/([A-Z]{4})/).gen();
   
   function onChange(e) {
     const files = e.target.files;
