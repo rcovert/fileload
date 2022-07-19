@@ -18,9 +18,9 @@ const App = () => {
   // generate other random values
 
   const tempssn = new RandExp(/([0-9]{9})/).gen();
-
-  const temptp = new RandExp(/([0-9]{4})/).gen();
-
+  //const temptp = new RandExp(/([0-9]{4})/).gen();
+  //const temptp = new RandExp(/([19|20])/).gen();
+  const temptp = new RandExp(/(1|12)[/](19|20)[0-9][0-9]/).gen();
   const tempnc = new RandExp(/([A-Z]{4})/).gen();
 
   useEffect(() => {
